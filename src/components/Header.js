@@ -1,9 +1,15 @@
 import PropTypes from "prop-types";
+import Button from "./Button";
 
 const Header = ({ title }) => {
+  const onClick = () => {
+    console.log("click");
+  };
+
   return (
-    <div>
+    <div className="header">
       <h1 style={headingStyle}> {title}</h1>
+      <Button text="Add" color="green" onClick={onClick} />
     </div>
   );
 };
