@@ -1,9 +1,9 @@
 import { useState } from "react";
+import AddTask from "./components/AddTask";
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
 
 function App() {
-  // eslint-disable-next-line no-unused-vars
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -25,9 +25,22 @@ function App() {
     },
   ]);
 
+  const [showTask, setShowTask] = useState(false);
+
+  // Add Task
+  const addTask = (task) => {
+    const id = Math.floor(Math.random() * 10000) + 1;
+    const newTask = { id, ...task };
+    setTasks([newTask, ...tasks]);
+  };
+
   // Delete Task
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
+  };
+
+  const toggleAddTask = () => {
+    setShowTask(!showTask);
   };
 
   // toggle the reminder
@@ -39,7 +52,12 @@ function App() {
 
   return (
     <div className="container">
-      <Header title="Task Manager" />
+      <Header
+        onClick={toggleAddTask}
+        showTask={showTask}
+        title="Task Manager"
+      />
+      {showTask && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ) : (
